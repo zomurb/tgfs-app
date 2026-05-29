@@ -4,7 +4,6 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple.svg)](https://kotlinlang.org/)
 [![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-green.svg)](https://developer.android.com/jetpack/compose)
 [![Platform](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://developer.android.com/)
-[![Latest Release](https://img.shields.io/github/v/release/zomurb/tgfs-app?color=blue)](https://github.com/zomurb/tgfs-app/releases/tag/v1.0.0)
 
 **TGFS Mobile** — это современное Android-приложение, которое превращает ваш личный Telegram-аккаунт или чат с ботом в **безлимитное, зашифрованное облачное хранилище**. Проект разработан на базе Clean Architecture и Jetpack Compose, обеспечивая полную конфиденциальность и совместимость с десктопной экосистемой TGFS Core (Python CLI).
 
