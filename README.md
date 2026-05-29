@@ -1,21 +1,96 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 📱 TGFS (Telegram File System) — Android Client
 
-# Run and deploy your AI Studio app
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple.svg)](https://kotlinlang.org/)
+[![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-green.svg)](https://developer.android.com/jetpack/compose)
+[![Platform](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://developer.android.com/)
 
-This contains everything you need to run your app locally.
+**TGFS Mobile** — это современное Android-приложение, которое превращает ваш личный Telegram-аккаунт или чат с ботом в **безлимитное, зашифрованное облачное хранилище**. Проект разработан на базе Clean Architecture и Jetpack Compose, обеспечивая полную конфиденциальность и совместимость с десктопной экосистемой TGFS Core (Python CLI).
 
-View your app in AI Studio: https://ai.studio/apps/cc941eb4-c271-4b48-94c8-eb8eb4388ad7
+---
 
-## Run Locally
+## 🌟 Основные возможности
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+*   **🗂 Потоковое разделение файлов:** Большие файлы автоматически нарезаются на оптимизированные чанки по 48 МБ без перегрузки оперативной памяти (RAM) устройства.
+*   **🔐 Бескомпромиссная безопасность (E2E):** Все файлы шифруются на стороне клиента перед отправкой. Используется алгоритм **AES-GCM-256**. Ключ шифрования генерируется на базе вашего мастер-пароля через **PBKDF2WithHmacSHA256** (100,000 итераций) с уникальной солью и IV для каждого чанка.
+*   **🔄 Умная синхронизация метаданных:** Структура папок и метаданные файлов хранятся в локальной базе данных SQLite (Room). Перед каждым бэкапом база принудительно синхронизирует WAL-логи (`PRAGMA wal_checkpoint`), упаковывается, шифруется и автоматически обновляет актуальный бэкап в вашем Telegram.
+*   **📲 Интеграция с Android OS:** Возможность делиться файлами из любых сторонних приложений (галерея, проводник) напрямую в TGFS через системное меню "Поделиться" (`ReceiveShareActivity`).
+*   **🎨 Современный UI/UX:** Интерфейс полностью построен на Jetpack Compose с поддержкой Material Design 3, динамических тем, удобной боковой панели навигации и кастомных диалоговых окон.
 
+---
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## 🛠 Технологический стек
+
+*   **Язык:** Kotlin (Coroutines, Flow)
+*   **Архитектура:** Clean Architecture + MVVM (Data, Domain, Presentation layers)
+*   **UI-фреймворк:** Jetpack Compose (Material 3)
+*   **База данных:** Room OS (SQLite) с поддержкой WAL-чекпоинтов
+*   **Асинхронные задачи:** WorkManager (для стабильной фоновой загрузки тяжелых чанков)
+*   **Сетевой стек:** OkHttp3 & Retrofit (Telegram Bot API / REST-клиент)
+*   **Криптография:** Java Cryptography Architecture (JCA), AES-GCM-256, PBKDF2
+
+---
+
+## 🏗 Архитектура проекта
+
+Приложение следует строгим принципам чистой архитектуры:
+```text
+📂 app/src/main/java/com/zomurb/tgfs
+│
+├── 📁 core          # Общие утилиты, DI-модули, темы оформления
+├── 📁 crypto        # Модуль шифрования (PBKDF2, AES-GCM, генераторы соли и IV)
+├── 📁 data          # Репозитории, Room DB, DAO, API-клиенты (OkHttp/Retrofit)
+├── 📁 domain        # Бизнес-логика, Use Cases, сущности (классы моделей данных)
+└── 📁 presentation  # Jetpack Compose UI (Экран Хранилища, Настройки, Воркеры)
+```
+
+---
+
+## 🚀 Быстрый старт
+
+### Требования
+
+* Android SDK 26+ (Android 8.0 и выше)
+* Android Studio Jellyfish / Ladybug или новее
+* Токен Telegram Бота и ваш `Chat ID` (можно получить у `@userinfobot`)
+
+### Сборка из исходников
+
+1. Клонируйте репозиторий:
+
+```bash
+git clone https://github.com/zomurb/tgfs-app.git
+cd tgfs-app
+```
+
+2. Откройте проект в Android Studio.
+3. Дождитесь окончания синхронизации Gradle.
+4. Соберите и запустите приложение (Кнопка **Run** или `./gradlew assembleDebug`).
+
+---
+
+## 🔒 Безопасность и Конфиденциальность
+
+Приложение работает по принципу **Zero-Knowledge**. Ваш мастер-пароль и сгенерированные ключи шифрования **никогда** не передаются по сети и не сохраняются в открытом виде. Telegram видит только поток зашифрованных байт, расшифровать которые без вашего пароля и соли невозможно даже теоретически.
+
+---
+
+## 🤝 Вклад в развитие (Contributing)
+
+Мы рады любому вкладу в развитие проекта! Если вы нашли баг или хотите предложить новую фичу:
+
+1. Форкните репозиторий.
+2. Создайте свою ветку фичи (`git checkout -b feature/AmazingFeature`).
+3. Закоммитьте изменения (`git commit -m 'Add some AmazingFeature'`).
+4. Отправьте ветку в ваш форк (`git push origin feature/AmazingFeature`).
+5. Откройте Pull Request.
+
+---
+
+## 📄 Лицензия
+
+Этот проект распространяется под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
+
+## 🧑💻 Разработчик
+
+* **GitHub:** [@zomurb](https://github.com/zomurb)
