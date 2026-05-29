@@ -1,0 +1,9 @@
+*.db
+*.session
+*.env
+__pycache__/
+.vscode/
+venv/
+*.pyc
+*.egg-info/
+.tgfs/

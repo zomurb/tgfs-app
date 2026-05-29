@@ -1,0 +1,6 @@
+{
+  "name": "TGFS",
+  "description": "Telegram File Storage mobile client with TDLib, encryption mechanisms, secure local Room database indexing, and WorkManager background upload syncing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
