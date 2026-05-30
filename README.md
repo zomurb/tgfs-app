@@ -48,24 +48,12 @@
 
 ## 🚀 Быстрый старт
 
-### Требования
+Для использования приложения вам понадобятся:
+* Токен Telegram-бота и ваш `Chat ID` (можно получить у `@userinfobot`).
 
-* Android SDK 26+ (Android 8.0 и выше)
-* Android Studio Jellyfish / Ladybug или новее
-* Токен Telegram Бота и ваш `Chat ID` (можно получить у `@userinfobot`)
+### Установка
 
-### Сборка из исходников
-
-1. Клонируйте репозиторий:
-
-```bash
-git clone https://github.com/zomurb/tgfs-app.git
-cd tgfs-app
-```
-
-2. Откройте проект в Android Studio.
-3. Дождитесь окончания синхронизации Gradle.
-4. Соберите и запустите приложение (Кнопка **Run** или `./gradlew assembleDebug`).
+Вы можете скачать готовый к установке APK-файл со страницы [релизов](https://github.com/zomurb/tgfs-app/releases) и установить его на ваше устройство под управлением Android (требуется Android 8.0 или выше).
 
 ---
 
